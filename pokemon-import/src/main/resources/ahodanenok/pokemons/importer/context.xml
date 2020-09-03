@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="classpath:ahodanenok/pokemons/core/context.xml" />
 
     <bean id="pokemonImport" class="ahodanenok.pokemons.importer.JsonPokemonImport" init-method="init">
         <property name="fromResource" value="file:///D:/projects/pokemons/p.json" />
+        <property name="jsonReaderFactory" ref="jsonReaderFactory" />
     </bean>
 
+    <bean id="jsonReaderFactory" class="ahodanenok.pokemons.importer.JsonReaderFactoryBean">
+        <constructor-arg>
+            <map>
+                <entry key="org.apache.johnzon.supports-comments" value="true" value-type="boolean" />
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <context:annotation-config />
 </beans>

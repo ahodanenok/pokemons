@@ -11,7 +11,7 @@
 
     <modules>
         <module>pokemons-cli</module>
-        <module>pokemon-model</module>
+        <module>pokemon-core</module>
         <module>pokemon-import</module>
     </modules>
 
