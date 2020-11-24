@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:context="http://www.springframework.org/schema/context"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <import resource="classpath:ahodanenok/pokemons/importer/context.xml" />
-
-    <bean id="cliMain" class="ahodanenok.pokemons.cli.command.MainCommand">
-        <property name="list" ref="cliList" />
-    </bean>
-
-    <bean id="cliList" class="ahodanenok.pokemons.cli.command.ListCommand">
-
-    </bean>
+    <context:annotation-config />
+    <context:component-scan base-package="ahodanenok.pokemons.cli.command" />
 </beans>

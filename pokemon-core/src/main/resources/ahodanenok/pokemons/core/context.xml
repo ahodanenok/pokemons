@@ -8,4 +8,12 @@
     <context:annotation-config />
     <context:component-scan base-package="ahodanenok.pokemons.validation" />
 
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <set>
+                <value>ahodanenok/pokemons/core/errors</value>
+            </set>
+        </property>
+    </bean>
+
 </beans>
