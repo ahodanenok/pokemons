@@ -5,27 +5,29 @@
     <parent>
         <groupId>ahodanenok.pokemons</groupId>
         <artifactId>pokemons</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pokemons-cli</artifactId>
+    <modelVersion>4.0.0</modelVersion>
 
     <dependencies>
         <dependency>
             <groupId>ahodanenok.pokemons</groupId>
-            <artifactId>pokemon-import</artifactId>
+            <artifactId>pokemons-import</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -33,4 +35,13 @@
             <version>1</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

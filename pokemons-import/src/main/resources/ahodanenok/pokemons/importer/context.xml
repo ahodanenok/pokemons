@@ -8,7 +8,7 @@
     <import resource="classpath:ahodanenok/pokemons/core/context.xml" />
 
     <bean id="pokemonImport" class="ahodanenok.pokemons.importer.JsonPokemonImport" init-method="init">
-        <property name="fromResource" value="file:///D:/projects/pokemons/p.json" />
+        <property name="fromResource" value="classpath:ahodanenok/pokemons/importer/p.json" />
         <property name="jsonReaderFactory" ref="jsonReaderFactory" />
     </bean>
 
