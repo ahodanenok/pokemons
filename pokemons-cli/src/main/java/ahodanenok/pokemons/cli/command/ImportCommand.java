@@ -4,8 +4,10 @@ import ahodanenok.pokemons.importer.JsonPokemonImport;
 import ahodanenok.pokemons.importer.PokemonImportResult;
 import ahodanenok.pokemons.model.Pokemon;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
@@ -13,16 +15,32 @@ import org.springframework.validation.ObjectError;
 import java.util.Locale;
 
 @Component
-public class ImportCommand implements CliCommand, MessageSourceAware {
+public class ImportCommand implements CliCommand, MessageSourceAware, Ordered {
 
     @Autowired
     private JsonPokemonImport pokemonImport;
 
     private MessageSource messageSource;
 
+    private int order;
+
     @Override
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    @Value("${command.import.order}")
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    @Override
+    public String getMenuTitle() {
+        return "Import";
     }
 
     @Override

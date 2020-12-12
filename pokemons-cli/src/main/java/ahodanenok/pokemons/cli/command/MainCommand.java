@@ -3,23 +3,17 @@ package ahodanenok.pokemons.cli.command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
+import java.util.List;
 import java.util.Scanner;
 
 @Component(value = "cliMain")
 public class MainCommand implements CliCommand {
 
-    private CliCommand list;
-    private ImportCommand importCommand;
+    private List<CliCommand> commands;
 
     @Autowired
-    public void setList(ListCommand list) {
-        this.list = list;
-    }
-
-    @Inject
-    public void setImportCommand(ImportCommand importCommand) {
-        this.importCommand = importCommand;
+    public void setCommands(List<CliCommand> commands) {
+        this.commands = commands;
     }
 
     @Override
@@ -27,12 +21,13 @@ public class MainCommand implements CliCommand {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Pokemons");
-            // todo: make dynamic, inject all instances of cli commands and generate menu from them
-            System.out.println("1. Show list");
-            System.out.println("2. Search");
-            System.out.println("3. Add a new one");
-            System.out.println("4. Import");
-            System.out.println("q. Выход");
+            for (int i = 0; i < commands.size(); i++) {
+                CliCommand command = commands.get(i);
+                if (command.getMenuTitle() != null) {
+                    System.out.printf("%d. %s%n", i + 1, command.getMenuTitle());
+                }
+            }
+            System.out.println("q. Exit");
 
             System.out.print(">");
             if (!scanner.hasNextLine()) {
@@ -40,16 +35,29 @@ public class MainCommand implements CliCommand {
             }
 
             String action = scanner.nextLine().trim();
-            if ("1".equals(action)) {
-                System.out.println();
-                list.execute();
-            } else if ("4".equals(action)) {
-                System.out.println();
-                importCommand.execute();
-            } else if ("q".equals(action)) {
+
+            if ("q".equals(action)) {
                 System.exit(0);
+                return;
             }
 
+            int commandIdx;
+            try {
+                commandIdx = Integer.parseInt(action) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Unknown command: " + action);
+                System.out.println();
+                continue;
+            }
+
+            if (commandIdx < 0 || commandIdx >= commands.size()) {
+                System.out.println("Unknown command: " + action);
+                System.out.println();
+                continue;
+            }
+
+            CliCommand command = commands.get(commandIdx);
+            command.execute();
         }
     }
 }

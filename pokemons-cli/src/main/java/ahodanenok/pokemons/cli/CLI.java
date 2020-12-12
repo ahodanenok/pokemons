@@ -4,7 +4,10 @@ import ahodanenok.pokemons.cli.command.MainCommand;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
 
 @SpringBootApplication
 @ImportResource({"ahodanenok/pokemons/importer/context.xml"})
@@ -21,5 +24,20 @@ public class CLI {
 
         ApplicationContext context = SpringApplication.run(CLI.class, args);
         context.getBean("cliMain", MainCommand.class).execute();
+    }
+
+    @Bean
+    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer1() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        configurer.setIgnoreUnresolvablePlaceholders(true);
+        configurer.setLocation(new ClassPathResource("ahodanenok/pokemons/cli/commands.properties"));
+        return configurer;
+    }
+
+    @Bean
+    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer2() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        configurer.setIgnoreUnresolvablePlaceholders(true);
+        return configurer;
     }
 }
